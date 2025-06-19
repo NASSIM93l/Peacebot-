@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peacebot – L’IA de la bienveillance</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #2b2d42;
+      --accent: #8d99ae;
+      --highlight: #ef233c;
+      --glass: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --bg: #fdfdfb;
+      --text: #202020;
+      --light: #f0f0fa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f8f9fa, #e9ecef);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header, section, footer { padding: 4rem 1.5rem; border-radius: 20px; margin: 2rem 0; }
+    header {
+      background: linear-gradient(135deg, #b5a9e3, #8e80d8);
+      animation: fadeIn 2s ease-in;
+
+      text-align: center;
+      color: var(--primary);
+    }
+    header img { max-width: 160px; }
+    header h1 { font-size: 3rem; margin: 1rem 0 0.5rem; }
+    header p { font-size: 1.2rem; }
+
+    .container { max-width: 1100px; margin: auto; }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    ul { margin-top: 1rem; padding-left: 1.5rem; }
+
+    
+    .cta {
+      display: inline-block;
+      background: linear-gradient(135deg, #ef233c, #d90429);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+    }
+
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Section de démonstration */
+    .demo-box {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 1rem;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    .demo-box textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      resize: none;
+    }
+    .demo-box button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.4rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .demo-response {
+      margin-top: 1rem;
+      font-style: italic;
+      color: var(--primary);
+    }
+  
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+  <script>
+    function simulateResponse() {
+      const userInput = document.getElementById('userMessage').value.trim();
+      const response = document.getElementById('response');
+
+      if (userInput === '') {
+        response.innerText = "Écris quelque chose pour que Peacebot puisse répondre.";
+      } else {
+        response.innerText = "Merci pour ton message. Respire profondément. Je suis là pour t'écouter 💜";
+      }
+    }
+  </script>
+
+<style>
+#peacebot-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  font-family: 'Inter', sans-serif;
+  z-index: 9999;
+}
+#peacebot-header {
+  background: #2b2d42;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+}
+#peacebot-body {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 1rem;
+  display: none;
+}
+#peacebot-body textarea {
+  width: 100%;
+  height: 60px;
+  border-radius: 6px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  resize: none;
+}
+#peacebot-body button {
+  margin-top: 0.5rem;
+  background: #ef233c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+#peacebot-response {
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: #2b2d42;
+}
+</style>
+</head>
+<body>
+  <nav style="background: #fff; padding: 1rem 1.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;">
+    <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+      <strong style="color: var(--primary); font-size: 1.2rem;">Peacebot</strong>
+      <div style="display: flex; gap: 1rem;">
+        <a href="#mission" style="text-decoration: none; color: var(--primary); font-weight: 600;">Mission</a>
+        <a href="#cibles" style="text-decoration: none; color: var(--primary); font-weight: 600;">Publics</a>
+        <a href="#fonctionnement" style="text-decoration: none; color: var(--primary); font-weight: 600;">Fonctionnement</a>
+        <a href="#demo" style="text-decoration: none; color: var(--primary); font-weight: 600;">Démo</a>
+        <a href="#faq" style="text-decoration: none; color: var(--primary); font-weight: 600;">FAQ</a>
+        <a href="#contact" style="text-decoration: none; color: var(--primary); font-weight: 600;">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <img src="logo_peacebot.png" alt="Logo Peacebot" style="max-width: 180px;" />
+    <h1>Peacebot, l’IA de la bienveillance</h1>
+    <p>Favoriser la paix, la communication non-violente et le bien-être, partout où l’on discute.</p>
+  </header>
+
+  <main class="container">
+
+    <section id="mission">
+      <h2>Notre mission</h2>
+      <p>
+        Peacebot aide à instaurer un climat de confiance et d'écoute grâce à une IA formée à la résolution pacifique des conflits,
+        à l’analyse des émotions et à la communication empathique.
+      </p>
+    </section>
+
+    <section id="cibles">
+      <h2>Publics concernés</h2>
+      <div class="grid">
+        <div class="card"><h3>Éducation</h3><p>Accompagnement émotionnel des élèves, gestion des conflits à l'école.</p></div>
+        <div class="card"><h3>ONG & Humanitaire</h3><p>Renforcement des actions de sensibilisation et de dialogue dans les zones sensibles.</p></div>
+        <div class="card"><h3>Bien-être mental</h3><p>Support moral, réduction du stress, écoute active en ligne.</p></div>
+        <div class="card"><h3>Entreprises</h3><p>Gestion des tensions au travail, coaching relationnel d’équipe.</p></div>
+        <div class="card"><h3>Réseaux sociaux</h3><p>Modération empathique, protection des échanges contre les conflits numériques.</p></div>
+      </div>
+    </section>
+
+    <section id="fonctionnement">
+      <h2>Comment ça marche&nbsp;?</h2>
+      <p>
+        Peacebot comprend les messages, détecte le ton émotionnel et propose des réponses qui apaisent les tensions.
+        Il peut recommander des respirations guidées, reformuler les phrases de manière bienveillante et favoriser l'écoute mutuelle.
+      </p>
+      <ul>
+        <li>Analyse du ton et des émotions</li>
+        <li>Réponses personnalisées et calmes</li>
+        <li>Suggestions de respiration, pauses et reformulations</li>
+        <li>Statistiques d’ambiance pour les modérateurs</li>
+      </ul>
+    </section>
+
+    <section id="demo">
+      <h2>Test interactif</h2>
+      <div class="demo-box">
+        <textarea id="userMessage" rows="4" placeholder="Exprime un ressenti, une émotion, un problème..."></textarea>
+        <button onclick="simulateResponse()">Envoyer à Peacebot</button>
+        <p class="demo-response" id="response"></p>
+      </div>
+    
+    </section>
+
+    <section id="faq">
+      <h2>Questions fréquentes</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Est-ce que Peacebot utilise une vraie intelligence artificielle&nbsp;?</h3>
+          <p>Oui, Peacebot repose sur un modèle avancé de langage entraîné pour comprendre les émotions et promouvoir la communication non-violente.</p>
+        </div>
+        <div class="card">
+          <h3>Est-ce que mes données sont protégées&nbsp;?</h3>
+          <p>Peacebot respecte la confidentialité. Aucun message n’est conservé sans votre consentement explicite.</p>
+        </div>
+        <div class="card">
+          <h3>Peut-on intégrer Peacebot sur un site existant&nbsp;?</h3>
+          <p>Oui, Peacebot peut être intégré en widget sur n’importe quel site web ou application.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Envie d’essayer Peacebot&nbsp;?</h2>
+      <p>Contacte notre équipe pour une démonstration ou une intégration personnalisée dans ton environnement.</p>
+      <p><a href="mailto:contact@peacebot.example" class="cta">Demander une démo</a></p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Peacebot – Tous droits réservés.</p>
+  </footer>
+
+
+<script>
+  function simulateResponse() {
+    const userInput = document.getElementById('userMessage').value.trim().toLowerCase();
+    const response = document.getElementById('response');
+    let reply = "";
+
+    if (!userInput) {
+      reply = "Écris quelque chose pour que Peacebot puisse répondre.";
+    } else if (userInput.includes("triste") || userInput.includes("déprimé") || userInput.includes("mal")) {
+      reply = "Je suis là pour toi. Respire doucement. Tu veux en parler ?";
+    } else if (userInput.includes("stress") || userInput.includes("angoissé")) {
+      reply = "Essaie cette respiration : inspire profondément 4 secondes, retiens 4 secondes, expire doucement.";
+    } else if (userInput.includes("colère") || userInput.includes("énervé")) {
+      reply = "Ta colère est légitime. Tu veux qu’on essaie de comprendre ce qui l’a déclenchée ?";
+    } else if (userInput.includes("merci")) {
+      reply = "Avec plaisir 💜 N’hésite pas à revenir me parler.";
+    } else {
+      reply = "Merci pour ton message. Je suis là pour t'écouter et t’apporter du soutien.";
+    }
+
+    response.innerText = reply;
+  }
+</script>
+
+
+<!-- Floating Chat Widget -->
+<div id="peacebot-widget">
+  <div id="peacebot-header" onclick="toggleChat()">🤖 Parle avec Peacebot</div>
+  <div id="peacebot-body">
+    <textarea id="peacebot-input" placeholder="Dis ce que tu ressens..."></textarea>
+    <button onclick="submitToPeacebot()">Envoyer</button>
+    <div id="peacebot-response"></div>
+  </div>
+</div>
+
+<script>
+  function toggleChat() {
+    const body = document.getElementById('peacebot-body');
+    body.style.display = (body.style.display === 'block') ? 'none' : 'block';
+  }
+
+  function submitToPeacebot() {
+    const userInput = document.getElementById('peacebot-input').value.trim().toLowerCase();
+    const response = document.getElementById('peacebot-response');
+    let reply = "";
+
+    if (!userInput) {
+      reply = "Écris quelque chose pour que Peacebot puisse répondre.";
+    } else if (userInput.includes("triste") || userInput.includes("déprimé") || userInput.includes("mal")) {
+      reply = "Je suis là pour toi. Respire doucement. Tu veux en parler ?";
+    } else if (userInput.includes("stress") || userInput.includes("angoissé")) {
+      reply = "Essaie cette respiration : inspire profondément 4 secondes, retiens 4 secondes, expire doucement.";
+    } else if (userInput.includes("colère") || userInput.includes("énervé")) {
+      reply = "Ta colère est légitime. Tu veux qu’on essaie de comprendre ce qui l’a déclenchée ?";
+    } else if (userInput.includes("merci")) {
+      reply = "Avec plaisir 💜 N’hésite pas à revenir me parler.";
+    } else {
+      reply = "Merci pour ton message. Je suis là pour t'écouter et t’apporter du soutien.";
+    }
+
+    response.innerText = reply;
+  }
+</script>
+
+</body>
+</html>
